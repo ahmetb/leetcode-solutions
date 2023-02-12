@@ -1,27 +1,16 @@
 import java.util.*;
-
-public class Solution {
-    // Subsets
-    // http://leetcode.com/onlinejudge#question_78
-    public ArrayList<ArrayList<Integer>> subsets(int[] S) {
-        Arrays.sort(S);
-        ArrayList<ArrayList<Integer>> sets = new  ArrayList<ArrayList<Integer>>();
-        for(int i = 0; i < Math.pow(2,S.length); i++){
-            // strip bits of i to figure out if element S[k] exists in this set
-            ArrayList<Integer> set = new ArrayList<Integer>();
-            
-            int j = i;
-            int k = 0;
-            while (j != 0){
-                if ((j & 1) > 0)
-                    set.add(S[k]);
-                
-                k++;
-                j >>= 1;
+class Solution {
+    public List<List<Integer>> subsets(int[] nums) {
+       List<List<Integer>> outer = new ArrayList<>();
+        outer.add(new ArrayList<>());
+        for (int num : nums) {
+            int n = outer.size();
+            for (int i = 0; i < n; i++) {
+                List<Integer> internal = new ArrayList<>(outer.get(i));
+                internal.add(num);
+                outer.add(internal);
             }
-            
-            sets.add(set);
         }
-        return sets;
+        return outer; 
     }
 }
